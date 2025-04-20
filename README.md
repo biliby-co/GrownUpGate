@@ -1,31 +1,31 @@
 # GrownUpGate
 
-A SwiftUI package that provides a parent gate challenge interface for iOS applications. This package helps protect sensitive content or actions by requiring parent verification through simple challenges.
+A SwiftUI package that provides a beautiful, animated parent gate for iOS apps. Perfect for protecting sensitive content or features from children.
 
 ## Features
 
-- Beautiful animated modal interface
-- Multiple challenge types (math, word problems, etc.)
-- Customizable challenges and answers
-- Success callback handling
-- iOS 15+ support
+- 🎨 Beautiful, modern UI with smooth animations
+- 🔢 Math-based challenges that are easy for adults but challenging for children
+- 🎭 Animated presentation with a bouncy drop-down effect
+- ⌨️ Custom animated keypad with staggered fade-in
+- 🎯 Success and failure callbacks
+- ⚡️ Easy to integrate with a simple ViewModifier
+- 🎮 Interactive dismissal with background tap
+- 📱 iOS 15.0+ support
 
 ## Installation
 
 ### Swift Package Manager
 
-Add GrownUpGate to your project using Swift Package Manager:
+Add GrownUpGate to your Xcode project using Swift Package Manager:
 
-1. In Xcode, select your project in the navigator
-2. Select your target
-3. Select the "Package Dependencies" tab
-4. Click the "+" button
-5. Enter the repository URL: `https://github.com/yourusername/GrownUpGate.git`
-6. Click "Add Package"
+1. In Xcode, go to File > Add Packages...
+2. Enter the repository URL: `https://github.com/yourusername/GrownUpGate.git`
+3. Click "Add Package"
 
 ## Usage
 
-Here's a simple example of how to use GrownUpGate in your SwiftUI view:
+### Basic Usage
 
 ```swift
 import SwiftUI
@@ -35,46 +35,38 @@ struct ContentView: View {
     @State private var showParentGate = false
     
     var body: some View {
-        Button("Show Sensitive Content") {
+        Button("Show Parent Gate") {
             showParentGate = true
         }
-        .sheet(isPresented: $showParentGate) {
-            ParentGate(
-                isPresented: $showParentGate,
-                challenge: ParentGateChallenge.randomChallenge().question,
-                correctAnswer: ParentGateChallenge.randomChallenge().answer,
-                onSuccess: {
-                    // Handle successful parent verification
-                    print("Parent verified successfully!")
-                }
-            )
-        }
+        .parentGate(
+            isPresented: $showParentGate,
+            onSuccess: {
+                // Handle successful verification
+                print("Parent gate passed!")
+            },
+            onFailure: {
+                // Handle failed verification
+                print("Parent gate failed!")
+            }
+        )
     }
 }
 ```
 
-### Available Challenges
+### Features
 
-The package comes with several pre-defined challenges:
-
-- Math challenges (e.g., "What is 7 + 3?")
-- Word challenges (e.g., "What is the opposite of 'hot'?")
-- Simple math challenges (e.g., "What is 5 × 4?")
-
-You can also create custom challenges:
-
-```swift
-let customChallenge = ParentGateChallenge(
-    question: "What is your favorite color?",
-    answer: "blue"
-)
-```
+- The parent gate presents with a smooth drop-down animation
+- The keypad fades in after the main dialog appears
+- Incorrect answers show an error message and dismiss the gate
+- Correct answers show a success message before dismissing
+- Tap the background to dismiss
+- The gate automatically handles state management
 
 ## Requirements
 
 - iOS 15.0+
-- Swift 5.9+
-- Xcode 14.0+
+- Swift 5.5+
+- Xcode 13.0+
 
 ## License
 
