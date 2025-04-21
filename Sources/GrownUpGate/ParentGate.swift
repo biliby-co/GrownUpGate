@@ -9,14 +9,23 @@ public struct ParentGate: View {
     
     @State private var offset: CGFloat = -1000
     @State private var scale: CGFloat = 0.8
-    @State private var answer: String = ""
     @State private var showError: Bool = false
     @State private var showSuccess: Bool = false
     @State private var opacity: Double = 0
     @State private var keypadOpacity: Double = 0
     @State private var audioPlayer: AVAudioPlayer?
     
-    private let challenge: ParentGateChallenge
+    @State private var firstNumber: Int
+    @State private var secondNumber: Int
+    @State private var answerValue: String = ""
+    
+    private var question: String {
+        "\(firstNumber) + \(secondNumber) = ?"
+    }
+    
+    var expectedAnswer: String {
+        String(firstNumber + secondNumber)
+    }
     
     public init(
         isPresented: Binding<Bool>,
@@ -24,7 +33,8 @@ public struct ParentGate: View {
         onFailure: @escaping () -> Void = {}
     ) {
         self._isPresented = isPresented
-        self.challenge = ParentGateChallenge.randomMathChallenge()
+        self.firstNumber = Int.random(in: 20...80)
+        self.secondNumber = Int.random(in: 2...9)
         self.onSuccess = onSuccess
         self.onFailure = onFailure
     }
@@ -43,13 +53,13 @@ public struct ParentGate: View {
                     .fontWeight(.bold)
                     .foregroundColor(.white)
                 
-                Text(challenge.question)
+                Text(question)
                     .font(.body)
                     .multilineTextAlignment(.center)
                     .padding(.horizontal)
                     .foregroundColor(.white)
                 
-                Text(answer.isEmpty ? "0" : answer)
+                Text(answerValue.isEmpty ? "0" : answerValue)
                     .font(.system(size: 40, weight: .bold))
                     .foregroundColor(.white)
                     .frame(height: 50)
@@ -151,16 +161,16 @@ public struct ParentGate: View {
     }
     
     private func handleKeyPress(_ key: String) {
-        if answer.count < 2 {
-            answer += key
-            if answer.count == 2 {
+        if answerValue.count < 2 {
+            answerValue += key
+            if answerValue.count == 2 {
                 checkAnswer()
             }
         }
     }
     
     private func checkAnswer() {
-        if answer == challenge.answer {
+        if answerValue == expectedAnswer {
             withAnimation(.spring(response: 0.5, dampingFraction: 0.7)) {
                 showSuccess = true
             }

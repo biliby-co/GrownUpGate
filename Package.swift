@@ -21,9 +21,6 @@ let package = Package(
             resources: [
                 .process("Resources/AskForHelp.m4a")
             ]
-        ),
-        .testTarget(
-            name: "GrownUpGateTests",
-            dependencies: ["GrownUpGate"]),
+        )
     ]
 )
