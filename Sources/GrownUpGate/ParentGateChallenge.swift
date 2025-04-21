@@ -17,13 +17,4 @@ public struct ParentGateChallenge {
         let secondNumber = Int.random(in: 2...9)
         return ParentGateChallenge(firstNumber: firstNumber, secondNumber: secondNumber)
     }
-    
-    public static let wordChallenge = ParentGateChallenge(
-        firstNumber: 0,
-        secondNumber: 0
-    )
-    
-    public static func randomChallenge() -> ParentGateChallenge {
-        return randomMathChallenge()
-    }
 } 

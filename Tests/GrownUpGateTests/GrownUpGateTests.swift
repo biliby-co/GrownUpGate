@@ -5,15 +5,9 @@ import SwiftUI
 @available(iOS 15.0, *)
 final class GrownUpGateTests: XCTestCase {
     func testParentGateChallenge() throws {
-        let challenge = ParentGateChallenge.mathChallenge
+        let challenge = ParentGateChallenge.randomMathChallenge()
         XCTAssertEqual(challenge.question, "What is 7 + 3?")
         XCTAssertEqual(challenge.answer, "10")
-    }
-    
-    func testRandomChallenge() throws {
-        let challenge = ParentGateChallenge.randomChallenge()
-        XCTAssertFalse(challenge.question.isEmpty)
-        XCTAssertFalse(challenge.answer.isEmpty)
     }
     
     func testParentGateView() throws {
