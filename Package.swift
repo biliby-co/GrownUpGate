@@ -1,4 +1,6 @@
 // swift-tools-version: 5.9
+// The swift-tools-version declares the minimum version of Swift required to build this package.
+
 import PackageDescription
 
 let package = Package(
@@ -12,12 +14,14 @@ let package = Package(
             name: "GrownUpGate",
             targets: ["GrownUpGate"]),
     ],
-    dependencies: [
-    ],
     targets: [
         .target(
             name: "GrownUpGate",
-            dependencies: []),
+            dependencies: [],
+            resources: [
+                .process("Resources/AskForHelp.m4a")
+            ]
+        ),
         .testTarget(
             name: "GrownUpGateTests",
             dependencies: ["GrownUpGate"]),

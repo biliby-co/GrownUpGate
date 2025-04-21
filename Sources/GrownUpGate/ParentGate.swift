@@ -1,4 +1,5 @@
 import SwiftUI
+import AVFoundation
 
 @available(iOS 15.0, *)
 public struct ParentGate: View {
@@ -13,6 +14,7 @@ public struct ParentGate: View {
     @State private var showSuccess: Bool = false
     @State private var opacity: Double = 0
     @State private var keypadOpacity: Double = 0
+    @State private var audioPlayer: AVAudioPlayer?
     
     private let challenge: ParentGateChallenge
     
@@ -107,7 +109,7 @@ public struct ParentGate: View {
             .opacity(opacity)
         }
         .onAppear {
-            // First animate the main dialog
+            setupAudio()
             withAnimation(.spring(response: 0.6, dampingFraction: 0.6, blendDuration: 0.5)) {
                 offset = 0
                 scale = 1
@@ -120,6 +122,20 @@ public struct ParentGate: View {
                     keypadOpacity = 1
                 }
             }
+        }
+    }
+    
+    private func setupAudio() {
+        guard let url = Bundle.module.url(forResource: "AskForHelp", withExtension: "m4a") else {
+            print("Could not find audio file in bundle: \(Bundle.module.bundlePath)")
+            return
+        }
+        
+        do {
+            audioPlayer = try AVAudioPlayer(contentsOf: url)
+            audioPlayer?.play()
+        } catch {
+            print("Could not play audio file: \(error)")
         }
     }
     
