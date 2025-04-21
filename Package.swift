@@ -19,7 +19,8 @@ let package = Package(
             name: "GrownUpGate",
             dependencies: [],
             resources: [
-                .process("Resources/AskForHelp.m4a")
+                .process("Resources/AskForHelp.m4a"),
+                .process("Resources/WrongAnswer.m4a")
             ]
         )
     ]

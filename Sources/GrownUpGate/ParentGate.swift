@@ -119,7 +119,7 @@ public struct ParentGate: View {
             .opacity(opacity)
         }
         .onAppear {
-            setupAudio()
+            playAudio("AskForHelp")
             withAnimation(.spring(response: 0.6, dampingFraction: 0.6, blendDuration: 0.5)) {
                 offset = 0
                 scale = 1
@@ -135,8 +135,8 @@ public struct ParentGate: View {
         }
     }
     
-    private func setupAudio() {
-        guard let url = Bundle.module.url(forResource: "AskForHelp", withExtension: "m4a") else {
+    private func playAudio(_ file: String) {
+        guard let url = Bundle.module.url(forResource: file, withExtension: "m4a") else {
             print("Could not find audio file in bundle: \(Bundle.module.bundlePath)")
             return
         }
@@ -187,11 +187,13 @@ public struct ParentGate: View {
                 showError = true
             }
             
+            playAudio("WrongAnswer")
+            
             // Call onFailure immediately
             onFailure()
             
             // Dismiss after a short delay to show the error message
-            DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 4.0) {
                 dismiss()
             }
         }
